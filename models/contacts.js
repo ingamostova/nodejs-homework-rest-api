@@ -1,13 +1,3 @@
-// const fs = require('fs/promises')
-
-// const listContacts = async () => {}
-
-// const getContactById = async (contactId) => {}
-
-// const removeContact = async (contactId) => {}
-
-// const addContact = async (body) => {}
-
 const fs = require("fs").promises;
 const path = require("path");
 const { nanoid } = require("nanoid");
@@ -62,9 +52,10 @@ const updateContact = async (contactId, data) => {
   if (idx === -1) {
     return null;
   }
-  contacts[idx] = { contactId, ...data };
+  const newContact = { ...contacts[idx], ...data };
+  contacts.splice(idx, 1, newContact);
   await updateContacts(contacts);
-  return contacts[idx];
+  return newContact;
 };
 
 module.exports = {
